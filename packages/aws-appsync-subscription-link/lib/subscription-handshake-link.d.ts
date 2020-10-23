@@ -1,8 +1,9 @@
+/// <reference types="zen-observable" />
 /*!
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-import { ApolloLink, Operation, FetchResult } from "@apollo/client";
+import { ApolloLink, Observable, Operation, FetchResult } from "apollo-link";
 declare type MqttConnectionInfo = {
     client: string;
     url: string;
@@ -14,7 +15,7 @@ export declare class SubscriptionHandshakeLink extends ApolloLink {
     private topicObservers;
     private clientObservers;
     constructor(subsInfoContextKey: any);
-    request(operation: Operation): any;
+    request(operation: Operation): Observable<unknown>;
     connectNewClients(connectionInfo: MqttConnectionInfo[], observer: ZenObservable.Observer<FetchResult>, operation: Operation): Promise<any[]>;
     connectNewClient(connectionInfo: MqttConnectionInfo, observer: ZenObservable.Observer<FetchResult>, selectionNames: string[]): Promise<any>;
     subscribeToTopics<T>(client: any, topics: string[], observer: ZenObservable.Observer<T>): Promise<unknown[]>;

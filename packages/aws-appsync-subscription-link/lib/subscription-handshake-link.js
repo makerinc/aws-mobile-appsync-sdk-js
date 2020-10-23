@@ -75,9 +75,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-var client_1 = require("@apollo/client");
+var apollo_link_1 = require("apollo-link");
 var utils_1 = require("./utils");
 var Paho = require("./vendor/paho-mqtt");
+var apollo_client_1 = require("apollo-client");
 var apollo_utilities_1 = require("apollo-utilities");
 var logger = utils_1.rootLogger.extend('subscriptions');
 var mqttLogger = logger.extend('mqtt');
@@ -111,8 +112,8 @@ var SubscriptionHandshakeLink = /** @class */ (function (_super) {
         var _b = operation.getContext(), _c = this.subsInfoContextKey, subsInfo = _b[_c], _d = _b.controlMessages, _e = exports.CONTROL_EVENTS_KEY, controlEvents = (_d === void 0 ? (_a = {}, _a[exports.CONTROL_EVENTS_KEY] = undefined, _a) : _d)[_e];
         var _f = subsInfo.extensions, _g = (_f === void 0 ? { subscription: { newSubscriptions: {}, mqttConnections: [] } } : _f).subscription, newSubscriptions = _g.newSubscriptions, mqttConnections = _g.mqttConnections, _h = subsInfo.errors, errors = _h === void 0 ? [] : _h;
         if (errors && errors.length) {
-            return new client_1.Observable(function (observer) {
-                observer.error(new client_1.ApolloError({
+            return new apollo_link_1.Observable(function (observer) {
+                observer.error(new apollo_client_1.ApolloError({
                     errorMessage: 'Error during subscription handshake',
                     extraInfo: { errors: errors },
                     graphQLErrors: errors
@@ -123,7 +124,7 @@ var SubscriptionHandshakeLink = /** @class */ (function (_super) {
         var newSubscriptionTopics = Object.keys(newSubscriptions).map(function (subKey) { return newSubscriptions[subKey].topic; });
         var existingTopicsWithObserver = new Set(newSubscriptionTopics.filter(function (t) { return _this.topicObservers.has(t); }));
         var newTopics = new Set(newSubscriptionTopics.filter(function (t) { return !existingTopicsWithObserver.has(t); }));
-        return new client_1.Observable(function (observer) {
+        return new apollo_link_1.Observable(function (observer) {
             existingTopicsWithObserver.forEach(function (t) {
                 _this.topicObservers.get(t).add(observer);
                 var anObserver = Array.from(_this.topicObservers.get(t)).find(function () { return true; });
@@ -268,5 +269,5 @@ var SubscriptionHandshakeLink = /** @class */ (function (_super) {
         });
     };
     return SubscriptionHandshakeLink;
-}(client_1.ApolloLink));
+}(apollo_link_1.ApolloLink));
 exports.SubscriptionHandshakeLink = SubscriptionHandshakeLink;

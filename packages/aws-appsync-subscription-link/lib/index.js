@@ -13,7 +13,8 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var subscription_handshake_link_1 = require("./subscription-handshake-link");
 exports.CONTROL_EVENTS_KEY = subscription_handshake_link_1.CONTROL_EVENTS_KEY;
-var client_1 = require("@apollo/client");
+var apollo_link_1 = require("apollo-link");
+var apollo_link_http_1 = require("apollo-link-http");
 var apollo_utilities_1 = require("apollo-utilities");
 var non_terminating_link_1 = require("./non-terminating-link");
 var realtime_subscription_handshake_link_1 = require("./realtime-subscription-handshake-link");
@@ -21,11 +22,11 @@ function createSubscriptionHandshakeLink(infoOrUrl, theResultsFetcherLink) {
     var resultsFetcherLink, subscriptionLinks;
     if (typeof infoOrUrl === "string") {
         resultsFetcherLink =
-            theResultsFetcherLink || client_1.createHttpLink({ uri: infoOrUrl });
-        subscriptionLinks = client_1.ApolloLink.from([
+            theResultsFetcherLink || apollo_link_http_1.createHttpLink({ uri: infoOrUrl });
+        subscriptionLinks = apollo_link_1.ApolloLink.from([
             new non_terminating_link_1.NonTerminatingLink("controlMessages", {
-                link: new client_1.ApolloLink(function (operation, _forward) {
-                    return new client_1.Observable(function (observer) {
+                link: new apollo_link_1.ApolloLink(function (operation, _forward) {
+                    return new apollo_link_1.Observable(function (observer) {
                         var _a;
                         var _b = operation.variables, _c = subscription_handshake_link_1.CONTROL_EVENTS_KEY, controlEvents = _b[_c], variables = __rest(_b, [typeof _c === "symbol" ? _c : _c + ""]);
                         if (typeof controlEvents !== "undefined") {
@@ -42,10 +43,10 @@ function createSubscriptionHandshakeLink(infoOrUrl, theResultsFetcherLink) {
     }
     else {
         var url = infoOrUrl.url;
-        resultsFetcherLink = theResultsFetcherLink || client_1.createHttpLink({ uri: url });
+        resultsFetcherLink = theResultsFetcherLink || apollo_link_http_1.createHttpLink({ uri: url });
         subscriptionLinks = new realtime_subscription_handshake_link_1.AppSyncRealTimeSubscriptionHandshakeLink(infoOrUrl);
     }
-    return client_1.ApolloLink.split(function (operation) {
+    return apollo_link_1.ApolloLink.split(function (operation) {
         var query = operation.query;
         var _a = apollo_utilities_1.getMainDefinition(query), kind = _a.kind, graphqlOperation = _a.operation;
         var isSubscription = kind === "OperationDefinition" && graphqlOperation === "subscription";

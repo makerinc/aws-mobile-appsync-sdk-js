@@ -2,7 +2,7 @@
  * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-import { ApolloLink, Operation } from "@apollo/client";
+import { ApolloLink, Observable, Operation, FetchResult } from "apollo-link";
 import { UrlInfo } from "./types";
 export declare const CONTROL_EVENTS_KEY = "@@controlEvents";
 export declare class AppSyncRealTimeSubscriptionHandshakeLink extends ApolloLink {
@@ -16,7 +16,9 @@ export declare class AppSyncRealTimeSubscriptionHandshakeLink extends ApolloLink
     private subscriptionObserverMap;
     private promiseArray;
     constructor({ url: theUrl, region: theRegion, auth: theAuth }: UrlInfo);
-    request(operation: Operation): any;
+    request(operation: Operation): Observable<FetchResult<{
+        [key: string]: any;
+    }, Record<string, any>, Record<string, any>>>;
     private _verifySubscriptionAlreadyStarted;
     private _sendUnsubscriptionMessage;
     private _removeSubscriptionObserver;

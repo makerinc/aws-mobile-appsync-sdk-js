@@ -64,8 +64,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-var client_1 = require("@apollo/client");
-var context_1 = require("@apollo/client/link/context");
+var apollo_link_1 = require("apollo-link");
+var apollo_link_context_1 = require("apollo-link-context");
 var NonTerminatingLink = /** @class */ (function (_super) {
     __extends(NonTerminatingLink, _super);
     function NonTerminatingLink(contextKey, _a) {
@@ -77,7 +77,7 @@ var NonTerminatingLink = /** @class */ (function (_super) {
     }
     NonTerminatingLink.prototype.request = function (operation, forward) {
         var _this = this;
-        return context_1.setContext(function (_request, prevContext) { return __awaiter(_this, void 0, void 0, function () {
+        return apollo_link_context_1.setContext(function (_request, prevContext) { return __awaiter(_this, void 0, void 0, function () {
             var result;
             var _a;
             var _this = this;
@@ -97,5 +97,5 @@ var NonTerminatingLink = /** @class */ (function (_super) {
         }); }).request(operation, forward);
     };
     return NonTerminatingLink;
-}(client_1.ApolloLink));
+}(apollo_link_1.ApolloLink));
 exports.NonTerminatingLink = NonTerminatingLink;

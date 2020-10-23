@@ -17,13 +17,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Copyright 2017-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-var client_1 = require("@apollo/client");
+var apollo_link_http_1 = require("apollo-link-http");
 var non_terminating_link_1 = require("./non-terminating-link");
 var NonTerminatingHttpLink = /** @class */ (function (_super) {
     __extends(NonTerminatingHttpLink, _super);
     function NonTerminatingHttpLink(contextKey, options) {
         var _this = this;
-        var link = client_1.createHttpLink(options);
+        var link = apollo_link_http_1.createHttpLink(options);
         _this = _super.call(this, contextKey, { link: link }) || this;
         return _this;
     }

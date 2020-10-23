@@ -64,7 +64,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Copyright 2017-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-var client_1 = require("@apollo/client");
+var apollo_link_1 = require("apollo-link");
 var utils_1 = require("./utils");
 var aws_appsync_auth_link_1 = require("aws-appsync-auth-link");
 var graphql_1 = require("graphql");
@@ -114,7 +114,7 @@ var AppSyncRealTimeSubscriptionHandshakeLink = /** @class */ (function (_super) 
         var _b = operation.getContext(), _c = _b.controlMessages, _d = exports.CONTROL_EVENTS_KEY, controlEvents = (_c === void 0 ? (_a = {},
             _a[exports.CONTROL_EVENTS_KEY] = undefined,
             _a) : _c)[_d], headers = _b.headers;
-        return new client_1.Observable(function (observer) {
+        return new apollo_link_1.Observable(function (observer) {
             var subscriptionId = uuid_1.v4();
             var options = {
                 appSyncGraphqlEndpoint: _this.url,
@@ -729,5 +729,5 @@ var AppSyncRealTimeSubscriptionHandshakeLink = /** @class */ (function (_super) 
             .replace("gogi-beta", "grt-beta");
     };
     return AppSyncRealTimeSubscriptionHandshakeLink;
-}(client_1.ApolloLink));
+}(apollo_link_1.ApolloLink));
 exports.AppSyncRealTimeSubscriptionHandshakeLink = AppSyncRealTimeSubscriptionHandshakeLink;

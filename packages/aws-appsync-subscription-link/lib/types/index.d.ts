@@ -1,3 +1,4 @@
+/// <reference types="zen-observable" />
 import { AuthOptions } from "aws-appsync-auth-link";
 export declare enum SUBSCRIPTION_STATUS {
     PENDING = 0,
